@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/placeholder_text"
+        android:id="@+id/date_header"
+        android:background="@color/list_header_color"
+        android:gravity="center"
+        android:padding="2dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="@dimen/standard_padding">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/placeholder_text"
+                android:id="@+id/name"
+                android:singleLine="false" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="@string/placeholder_text_time"
+                    android:id="@+id/start"
+                    style="@style/TextAppearanceTimeRange" />
+                <TextView
+                    android:text="@string/dash"
+                    style="@style/TextAppearanceTimeRange"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp" />
+                <TextView
+                    android:text="@string/placeholder_text_time"
+                    android:id="@+id/stop"
+                    style="@style/TextAppearanceTimeRange" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView style="@style/TextAppearanceDuration"
+            android:id="@+id/duration"
+            android:layout_width="wrap_content"
+            android:gravity="center_vertical|right"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</LinearLayout>

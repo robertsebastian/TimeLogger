@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/edit"
+        android:title="@string/time_list_edit_edit" />
+    <item android:id="@+id/join_up"
+          android:title="@string/time_list_edit_join_up" />
+    <item android:id="@+id/join_down"
+        android:title="@string/time_list_edit_join_down" />
+    <item android:id="@+id/split"
+        android:title="@string/time_list_edit_split" />
+    <item android:id="@+id/delete"
+        android:title="@string/time_list_edit_delete"/>
+</menu>

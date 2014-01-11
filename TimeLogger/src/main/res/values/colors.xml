@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="divider_color">#CCC</color>
+    <color name="list_header_color">#DDD</color>
+    <color name="selected_indicator_color">#0099CC</color>
+    <color name="not_selected_indicator_color">#ffccdde3</color>
+</resources>

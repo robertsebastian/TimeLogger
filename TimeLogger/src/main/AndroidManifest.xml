@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.robertsebastian.timelogger"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="19" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.robertsebastian.timelogger.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name="com.robertsebastian.timelogger.TimeProvider"
+            android:authorities="com.robertsebastian.timelogger"
+            android:exported="false" />
+
+        <activity
+            android:name="com.robertsebastian.timelogger.EditTimeRangeActivity"
+            android:label="@string/title_activity_edit_time_range"
+            android:windowSoftInputMode="stateUnchanged"
+            android:parentActivityName="com.robertsebastian.timelogger.MainActivity" >
+        </activity>
+
+        <activity
+            android:name="com.robertsebastian.timelogger.ReportActivity"
+            android:label="Report"
+            android:windowSoftInputMode="stateUnchanged"
+            android:parentActivityName="com.robertsebastian.timelogger.MainActivity" >
+        </activity>
+    </application>
+
+</manifest>

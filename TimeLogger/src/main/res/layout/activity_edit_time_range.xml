@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/standard_padding">
+
+        <TextView style="@style/ListItemTitleStyle"
+            android:text="@string/edit_title_task" />
+        <ImageView style="@style/ListItemDividerStyle"/>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:id="@+id/task_spinner"
+            android:spinnerMode="dropdown" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/stop_time_dependent_fields">
+
+            <TextView style="@style/ListItemTitleStyle"
+                android:text="@string/edit_title_duration" />
+
+            <ImageView style="@style/ListItemDividerStyle"/>
+
+            <EditText
+                android:id="@+id/duration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:clickable="false"
+                android:padding="10dp" />
+
+            <TextView style="@style/ListItemTitleStyle"
+                android:text="@string/edit_title_stop_time" />
+
+            <ImageView style="@style/ListItemDividerStyle"/>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView style="@style/TextAppearanceTimeLarge"
+                        android:id="@+id/stop_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/placeholder_time" />
+
+                    <TextView style="@style/TextAppearanceDescription"
+                        android:id="@+id/stop_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/placeholder_date" />
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/stop_edit"
+                    android:onClick="onEditStopTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/ic_action_edit" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <TextView style="@style/ListItemTitleStyle"
+            android:text="@string/edit_title_start_time" />
+        <ImageView style="@style/ListItemDividerStyle"/>
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <TextView style="@style/TextAppearanceTimeLarge"
+                    android:id="@+id/start_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/placeholder_time" />
+
+                <TextView style="@style/TextAppearanceDescription"
+                    android:id="@+id/start_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/placeholder_date" />
+            </LinearLayout>
+            <ImageButton
+                android:id="@+id/start_edit"
+                android:onClick="onEditStartTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/ic_action_edit" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</ScrollView>

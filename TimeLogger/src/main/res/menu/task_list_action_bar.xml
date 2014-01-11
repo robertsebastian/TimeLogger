@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_change_date_range"
+        android:icon="@drawable/ic_action_go_to_today"
+        android:title="@string/action_set_date_range"
+        android:showAsAction="ifRoom|withText">
+        <menu>
+            <item android:id="@+id/action_date_range_today"
+                android:title="@string/date_range_today" />
+            <item android:id="@+id/action_date_range_yesterday"
+                android:title="@string/date_range_yesterday" />
+            <item android:id="@+id/action_date_range_this_week"
+                android:title="@string/date_range_this_week" />
+            <item android:id="@+id/action_date_range_last_week"
+                android:title="@string/date_range_last_week" />
+            <item android:id="@+id/action_date_range_all_time"
+                android:title="@string/date_range_all_time" />
+            <item android:id="@+id/action_date_range_pick_day"
+                android:title="@string/date_range_pick_day" />
+            <item android:id="@+id/action_date_range_pick_range"
+                android:title="@string/date_range_pick_range" />
+        </menu>
+    </item>
+    <item android:id="@+id/action_sort"
+        android:icon="@drawable/ic_action_sort_by_size"
+        android:title="@string/action_sort"
+        android:showAsAction="ifRoom|withText">
+        <menu>
+            <item android:id="@+id/show_hidden"
+                android:checkable="true"
+                android:title="@string/filter_show_hidden" />
+            <item android:id="@+id/sort_by_name"
+                android:title="@string/sort_by_name" />
+            <item android:id="@+id/sort_by_usage"
+                android:title="@string/sort_by_usage" />
+            <item android:id="@+id/sort_by_creation_time"
+                android:title="@string/sort_by_creation_time" />
+        </menu>
+    </item>
+    <item android:id="@+id/action_new_task"
+        android:icon="@drawable/ic_action_new"
+        android:title="@string/action_new_task"
+        android:showAsAction="ifRoom|withText" />
+    <item android:id="@+id/action_report"
+        android:title="Report" />
+</menu>
