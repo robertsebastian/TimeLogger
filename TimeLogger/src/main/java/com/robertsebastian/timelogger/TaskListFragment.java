@@ -28,6 +28,8 @@ import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.util.*;
+import android.content.*;
 
 public class TaskListFragment extends ListFragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
@@ -46,11 +48,11 @@ public class TaskListFragment extends ListFragment implements
     private static final long ONE_WEEK = ONE_DAY * 7;
 
     // Restore data
-    long mStartRange   = Long.MIN_VALUE;
-    long mStopRange    = Long.MAX_VALUE;
-    String mDateText   = "";
-    boolean mDateShowHidden = false;
-    String mDateSort   = "last_used desc";
+    private long mStartRange   = Long.MIN_VALUE;
+    private long mStopRange    = Long.MAX_VALUE;
+    private String mDateText   = "";
+    private boolean mDateShowHidden = false;
+    private String mDateSort   = "last_used desc";
 
     // Frequently accessed views
     private TextView mTotalDurationTextView;
@@ -83,7 +85,15 @@ public class TaskListFragment extends ListFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+		
         setHasOptionsMenu(true);
+		setRetainInstance(true);
+		
+		// Default to "today" view
+        long today = Util.getToday().getTimeInMillis();
+        mStartRange = today;
+        mStopRange  = today + ONE_DAY;
+        mDateText   = getString(R.string.date_range_today);	
     }
 
     @Override
@@ -113,15 +123,14 @@ public class TaskListFragment extends ListFragment implements
         setListAdapter(adapter);
 
         registerForContextMenu(getListView());
-
-        // Get the last filter/sort criteria
+        
+        // Use the last filter/sort criteria
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         mDateShowHidden = pref.getBoolean("date_show_hidden", false);
         mDateSort = pref.getString("date_sort", "name collate nocase asc");
-
-        // Default to "today" view
-        long today = Util.getToday().getTimeInMillis();
-        updateDateRange(today, today + ONE_DAY, R.string.date_range_today);
+        
+        // Initialize date range
+        updateDateRange(mStartRange, mStopRange, mDateText);
     }
 
     // Create context menu for modifying a task

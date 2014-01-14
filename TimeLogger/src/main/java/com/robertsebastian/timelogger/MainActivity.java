@@ -7,13 +7,14 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import java.util.*;
+import android.app.*;
 
 public class MainActivity extends Activity implements ActionBar.OnNavigationListener {
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    private static final Fragment[] NAV_FRAGMENTS = new Fragment[] {
-            (Fragment)new TaskListFragment(),
-            (Fragment)new TimeListFragment()};
+	private HashMap<String, Fragment> mFragments = new HashMap<String, Fragment>();
+	private String[] mTags;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +32,21 @@ public class MainActivity extends Activity implements ActionBar.OnNavigationList
         actionBar.setHomeButtonEnabled(false);
 
         // Create dropdown navigation list
+		mTags = getResources().getStringArray(R.array.action_bar_nav_labels);
         ArrayAdapter<String> arr = new ArrayAdapter<String>(actionBar.getThemedContext(),
                 android.R.layout.simple_list_item_1, android.R.id.text1,
-                getResources().getStringArray(R.array.action_bar_nav_labels));
+                mTags);
         actionBar.setListNavigationCallbacks(arr, this);
+		
+		// Find any existing fragment instances
+		FragmentManager fm = getFragmentManager();
+		for(String tag : mTags) {
+			mFragments.put(tag, fm.findFragmentByTag(tag));
+		}
+		
+		// Add fragmemts
+		if(mFragments.get(mTags[0]) == null) mFragments.put(mTags[0], new TaskListFragment());
+		if(mFragments.get(mTags[1]) == null) mFragments.put(mTags[1], new TimeListFragment());
 
         // Go to default nav item or restore
         if(savedInstanceState == null) {
@@ -47,6 +59,8 @@ public class MainActivity extends Activity implements ActionBar.OnNavigationList
     @Override
     public void onSaveInstanceState(Bundle outState) {
         assert(getActionBar() != null);
+		
+		super.onSaveInstanceState(outState);
 
         outState.putInt("nav_position", getActionBar().getSelectedNavigationIndex());
         Log.d(TAG, "Saved instance state");
@@ -55,7 +69,7 @@ public class MainActivity extends Activity implements ActionBar.OnNavigationList
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(android.R.id.content, NAV_FRAGMENTS[itemPosition], Integer.toString(itemPosition));
+        ft.replace(android.R.id.content, mFragments.get(mTags[itemPosition]), mTags[itemPosition]);
         ft.commit();
         return true;
     }
