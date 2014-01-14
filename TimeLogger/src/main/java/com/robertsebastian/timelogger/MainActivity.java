@@ -3,12 +3,12 @@ package com.robertsebastian.timelogger;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
-import java.util.*;
-import android.app.*;
+import java.util.HashMap;
 
 public class MainActivity extends Activity implements ActionBar.OnNavigationListener {
     public static final String TAG = MainActivity.class.getSimpleName();

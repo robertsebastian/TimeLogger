@@ -28,8 +28,6 @@ import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import android.util.*;
-import android.content.*;
 
 public class TaskListFragment extends ListFragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
