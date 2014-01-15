@@ -28,6 +28,7 @@ import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.text.TextUtils;
 
 public class TaskListFragment extends ListFragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
@@ -49,7 +50,8 @@ public class TaskListFragment extends ListFragment implements
     private long mStartRange   = Long.MIN_VALUE;
     private long mStopRange    = Long.MAX_VALUE;
     private String mDateText   = "";
-    private boolean mDateShowHidden = false;
+    private boolean mShowHidden = false;
+	private boolean mShowOnlyRecent = false;
     private String mDateSort   = "last_used desc";
 
     // Frequently accessed views
@@ -124,7 +126,8 @@ public class TaskListFragment extends ListFragment implements
         
         // Use the last filter/sort criteria
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        mDateShowHidden = pref.getBoolean("date_show_hidden", false);
+        mShowHidden = pref.getBoolean("filter_show_hidden", false);
+		mShowOnlyRecent = pref.getBoolean("filter_show_only_recent", false);
         mDateSort = pref.getString("date_sort", "name collate nocase asc");
         
         // Initialize date range
@@ -186,7 +189,8 @@ public class TaskListFragment extends ListFragment implements
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.task_list_action_bar, menu);
 
-        menu.findItem(R.id.show_hidden).setChecked(mDateShowHidden);
+        menu.findItem(R.id.show_hidden).setChecked(mShowHidden);
+		menu.findItem(R.id.only_recent).setChecked(mShowOnlyRecent);
     }
 
     // Get the current cursor and move it to the position at which a context menu is open
@@ -248,36 +252,28 @@ public class TaskListFragment extends ListFragment implements
         mStopRange = stop;
         mDateText = text;
 
-        getLoaderManager().restartLoader(TASKS_QUERY_ID, null, this);
+        refreshTasks();
     }
 
     // Update sort criteria and start new query with it
     private void updateSortCriteria(String criteria) {
-        assert(getActivity() != null);
+		mDateSort = criteria;
+    	refreshTasks();
+    }
+	
+	private void refreshTasks() {
+		assert(getActivity() != null);
         assert(getLoaderManager() != null);
 
-        mDateSort = criteria;
         getLoaderManager().restartLoader(TASKS_QUERY_ID, null, this);
 
-        // Save this as a preference so it persists across app restarts
+        // Save options so they persists across app restarts
         SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
-        pref.putString("date_sort", mDateSort);
+        pref.putBoolean("filter_show_hidden", mShowHidden);
+		pref.putBoolean("filter_show_only_recent", mShowOnlyRecent);
+		pref.putString("date_sort", mDateSort);
         pref.commit();
-    }
-
-    // Update filter criteria and start new query with it
-    private void updateShowHidden(boolean showHidden) {
-        assert(getActivity() != null);
-        assert(getLoaderManager() != null);
-
-        mDateShowHidden = showHidden;
-        getLoaderManager().restartLoader(TASKS_QUERY_ID, null, this);
-
-        // Save this as a preference so it persists across app restarts
-        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
-        pref.putBoolean("date_show_hidden", mDateShowHidden);
-        pref.commit();
-    }
+	}
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -286,12 +282,18 @@ public class TaskListFragment extends ListFragment implements
                     .appendQueryParameter("start", Long.toString(mStartRange))
                     .appendQueryParameter("stop", Long.toString(mStopRange))
                     .build();
+					
+			long recentTime = Util.getToday().getTimeInMillis() - ONE_WEEK * 6;
+			String recentStr = Long.toString(recentTime);
+					
+			String filters = "(" + TextUtils.join(" and ", new String[] {
+				mShowHidden ? "1" : "hidden = 0",
+				mShowOnlyRecent ? "last_used >= " + recentStr : "1"
+			}) + ") or duration > 0";
 
-            return new CursorLoader(this.getActivity(),
-                uri,
+            return new CursorLoader(this.getActivity(), uri,
                 new String[] {"_id", "name", "description", "selected", "duration", "hidden"},
-                mDateShowHidden ? null : "hidden = 0 or duration > 0", null,
-                mDateSort);
+                filters, null, mDateSort);
         }
         return null;
     }
@@ -405,10 +407,13 @@ public class TaskListFragment extends ListFragment implements
         // Handle updates to filter criteria
         case R.id.show_hidden:
             item.setChecked(!item.isChecked());
-            updateShowHidden(item.isChecked());
+			mShowHidden = item.isChecked();
+            refreshTasks();
             return true;
 		case R.id.only_recent:
 			item.setChecked(!item.isChecked());
+			mShowOnlyRecent = item.isChecked();
+			refreshTasks();
 			return true;
 				
         // Handle updates to sort criteria
