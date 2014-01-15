@@ -333,7 +333,6 @@ public class TimeProvider extends ContentProvider {
         }
 
         int updateCount = db.update(table, values, where, selectionArgs);
-        Log.d(TAG, "Update count: " + updateCount);
         if(updateCount > 0 && getContext() != null) {
             getContext().getContentResolver().notifyChange(uri, null);
         }

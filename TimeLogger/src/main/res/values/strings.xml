@@ -48,6 +48,7 @@
     <string name="date_range_pick_day">Pick Day…</string>
     <string name="date_range_pick_range">Pick Range…</string>
     <string name="filter_show_hidden">Show Deleted</string>
+	<string name="filter_only_recent">Only Recent</string>
     <string name="sort_by_name">By Name</string>
     <string name="sort_by_usage">By Last Usage</string>
     <string name="sort_by_creation_time">By Creation Time</string>

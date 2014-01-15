@@ -30,6 +30,9 @@
             <item android:id="@+id/show_hidden"
                 android:checkable="true"
                 android:title="@string/filter_show_hidden" />
+			<item android:id="@+id/only_recent"
+				android:checkable="true"
+				android:title="@string/filter_only_recent" />
             <item android:id="@+id/sort_by_name"
                 android:title="@string/sort_by_name" />
             <item android:id="@+id/sort_by_usage"

@@ -403,13 +403,16 @@ public class TaskListFragment extends ListFragment implements
             showDatePickerDialog(DIALOG_ACTION_PICK_FIRST_DAY,
                     R.string.prompt_select_first_day, mStartRange, Long.MIN_VALUE, Long.MAX_VALUE);
             return true;
-
+			
         // Handle updates to filter criteria
         case R.id.show_hidden:
             item.setChecked(!item.isChecked());
             updateShowHidden(item.isChecked());
             return true;
-
+		case R.id.only_recent:
+			item.setChecked(!item.isChecked());
+			return true;
+				
         // Handle updates to sort criteria
         case R.id.sort_by_name:
             updateSortCriteria("hidden asc, name collate nocase asc");
